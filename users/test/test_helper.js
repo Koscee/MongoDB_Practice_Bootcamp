@@ -8,6 +8,9 @@ mongoose.connection
   });
 
 // empty database before running each test
-beforeEach(() => {
-  mongoose.connection.collections.users.drop();
+beforeEach((done) => {
+  mongoose.connection.collections.users.drop(() => {
+    // Ready to run the next test!
+    done();
+  });
 });
