@@ -6,3 +6,8 @@ mongoose.connection
   .on('error', (error) => {
     console.warn('Warning', error);
   });
+
+// empty database before running each test
+beforeEach(() => {
+  mongoose.connection.collections.users.drop();
+});
