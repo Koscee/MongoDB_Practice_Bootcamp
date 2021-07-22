@@ -16,7 +16,7 @@ describe('Reading user out of the database', () => {
         // make sure to call the toString method on both ids when comparing them
         assert(users[0]._id.toString() === joe._id.toString());
         done();
-      }).catch(done);
+      }).catch(done);  // resolves timeout error if test fails
   });
 
   it('find a user with a particular id', (done) => {
@@ -24,6 +24,6 @@ describe('Reading user out of the database', () => {
       .then((user) => {
         assert(user.name === 'Joe');
         done();
-      }).catch(done);
+      }).catch(done);  // resolves timeout error if test fails
   });
 });
