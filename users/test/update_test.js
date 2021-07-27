@@ -51,7 +51,8 @@ describe('Updating records', () => {
   });
 
 // applying increment update operator
-  it('A user can have their postCount incremented by 1', (done) => {
+// add 'x' to 'it()' = xit(), this tells mocha to ommit a test
+  xit('A user can have their postCount incremented by 1', (done) => {
     User.update({ name: 'Joe' }, { $inc: { postCount: 10 } })
       .then(() => User.findOne({ name: 'Joe' }))
       .then((user) => {
