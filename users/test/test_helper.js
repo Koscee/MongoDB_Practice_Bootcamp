@@ -18,9 +18,10 @@ before((done) => {
 
 // empty database before running each test
 beforeEach((done) => {
-  const { users, blogPosts, comments } = mongoose.connection.collections;
+  // fixed mongoose cannot read property TypeError ( blogPosts -> blogposts)
+  const { users, blogposts, comments } = mongoose.connection.collections;
   users.drop(() => {
-    blogPosts.drop(() => {
+    blogposts.drop(() => {
       comments.drop(() => {
         done();
       });
