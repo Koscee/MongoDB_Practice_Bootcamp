@@ -14,6 +14,17 @@ describe('Associations', () => {
     joe.blogPosts.push(blogPost);    // hasMany relationship
     blogPost.comments.push(comment);  // hasMany relationship
     comment.user = joe;        // hasOne relationship
+
+    Promise.all([joe.save(), blogPost.save(), comment.save()])
+      .then(() => done());
   });
 
+  // "it.only()" tells mocha to run only that test and ignores others
+  it.only('saves a relation between a user and a blogpost', (done) => {
+    User.findOne({ name: 'Joe' })
+      .then((user) => {
+        console.log(user);
+        done();
+      });
+  });
 });
