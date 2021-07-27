@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const assert = require('assert');
 const BlogPost = require('../src/blogPost');
 const Comment = require('../src/comment');
 const User = require('../src/user');
@@ -19,12 +20,13 @@ describe('Associations', () => {
       .then(() => done());
   });
 
-  // "it.only()" tells mocha to run only that test and ignores others
-  it.only('saves a relation between a user and a blogpost', (done) => {
+
+  it('saves a relation between a user and a blogpost', (done) => {
     User.findOne({ name: 'Joe' })
+      .populate('blogPosts')
       .then((user) => {
-        console.log(user);
+        assert(user.blogPosts[0].title === 'Learning Mongodb');
         done();
-      });
+      }).catch(done);
   });
 });
