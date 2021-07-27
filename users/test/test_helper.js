@@ -18,8 +18,12 @@ before((done) => {
 
 // empty database before running each test
 beforeEach((done) => {
-  mongoose.connection.collections.users.drop(() => {
-    // Ready to run the next test!
-    done();
+  const { users, blogPosts, comments } = mongoose.connection.collections;
+  users.drop(() => {
+    blogPosts.drop(() => {
+      comments.drop(() => {
+        done();
+      });
+    });
   });
 });
