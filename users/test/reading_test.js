@@ -2,11 +2,15 @@ const assert = require('assert');
 const User  = require('../src/user');
 
 describe('Reading user out of the database', () => {
-  let joe;
+  let joe, kelly, tobin, zed;
 
   beforeEach((done) => {
     joe = new User({ name: 'Joe' });
-    joe.save()
+    kelly = new User({ name: 'Kelly' });
+    tobin = new User({ name: 'Tobin' });
+    zed = new User({ name: 'Zed' });
+
+    Promise.all([joe.save(), kelly.save(), tobin.save(), zed.save()])
       .then(() => done());
   });
 
@@ -25,5 +29,9 @@ describe('Reading user out of the database', () => {
         assert(user.name === 'Joe');
         done();
       }).catch(done);  // resolves timeout error if test fails
+  });
+
+  it('can skip and limit the result set', () => {
+    User.find({}).skip(1).limit(2)
   });
 });
