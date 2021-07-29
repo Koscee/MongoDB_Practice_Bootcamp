@@ -10,7 +10,7 @@ describe('Reading user out of the database', () => {
     tobin = new User({ name: 'Tobin' });
     zed = new User({ name: 'Zed' });
 
-    Promise.all([joe.save(), kelly.save(), tobin.save(), zed.save()])
+    Promise.all([kelly.save(), joe.save(), tobin.save(), zed.save()])
       .then(() => done());
   });
 
@@ -31,7 +31,16 @@ describe('Reading user out of the database', () => {
       }).catch(done);  // resolves timeout error if test fails
   });
 
-  it('can skip and limit the result set', () => {
-    User.find({}).skip(1).limit(2)
+  it('can skip and limit the result set', (done) => {
+    User.find({})
+      .sort({ name: 1 }) // sorts name in alphabetical order ("1 means Asc" and "-1 means Desc")
+      .skip(1)
+      .limit(2)
+      .then((users) => {
+        assert(users.length === 2)
+        assert(users[0].name === 'Kelly')
+        assert(users[1].name === 'Tobin')
+        done();
+      }).catch(done);
   });
 });
