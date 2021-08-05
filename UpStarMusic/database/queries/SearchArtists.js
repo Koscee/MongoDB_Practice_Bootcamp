@@ -29,6 +29,15 @@ module.exports = (criteria, sortProperty, offset = 0, limit = 20) => {
 const buildQuery = (criteria) => {
   const query = {};
 
+  if (criteria.name) {
+    /**
+      * for the search to work, make sure to create a text index
+      * for the field u want to search with in your DB
+      * using ur mongo shell run (db.collection.createIndex({ field: "text" }))
+     */
+    query.$text = { $search: criteria.name };
+  }
+
   if (criteria.age) {
     query.age = {
       $gte: criteria.age.min,
